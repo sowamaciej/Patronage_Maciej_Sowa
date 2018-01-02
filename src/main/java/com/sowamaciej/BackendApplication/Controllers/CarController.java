@@ -1,5 +1,7 @@
-package com.sowamaciej.BackendApplication;
+package com.sowamaciej.BackendApplication.Controllers;
 
+import com.sowamaciej.BackendApplication.Models.Car;
+import com.sowamaciej.BackendApplication.Services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

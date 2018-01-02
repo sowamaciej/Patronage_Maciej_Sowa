@@ -1,5 +1,6 @@
-package com.sowamaciej.BackendApplication;
+package com.sowamaciej.BackendApplication.Services;
 
+import com.sowamaciej.BackendApplication.Models.Car;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicLong;

@@ -1,7 +1,9 @@
-package com.sowamaciej.BackendApplication;
+package com.sowamaciej.BackendApplication.Controllers;
 
 import static org.hamcrest.Matchers.*;
 
+import com.sowamaciej.BackendApplication.Controllers.ClientController;
+import com.sowamaciej.BackendApplication.Models.Client;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

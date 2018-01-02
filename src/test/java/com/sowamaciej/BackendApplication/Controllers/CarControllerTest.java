@@ -1,6 +1,8 @@
-package com.sowamaciej.BackendApplication;
+package com.sowamaciej.BackendApplication.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sowamaciej.BackendApplication.Controllers.CarController;
+import com.sowamaciej.BackendApplication.Models.Car;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

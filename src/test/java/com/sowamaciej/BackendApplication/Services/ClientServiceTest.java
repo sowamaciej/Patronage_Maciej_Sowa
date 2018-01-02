@@ -1,5 +1,7 @@
-package com.sowamaciej.BackendApplication;
+package com.sowamaciej.BackendApplication.Services;
 
+import com.sowamaciej.BackendApplication.Models.Client;
+import com.sowamaciej.BackendApplication.Services.ClientService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

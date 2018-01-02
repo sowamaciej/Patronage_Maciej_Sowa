@@ -1,4 +1,4 @@
-package com.sowamaciej.BackendApplication;
+package com.sowamaciej.BackendApplication.Models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
