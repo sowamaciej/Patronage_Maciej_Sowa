@@ -60,9 +60,9 @@ public class ClientService {
 
     private static List<Client> initClients() {
         List<Client> clients = new ArrayList<Client>();
-        clients.add(new Client(counter.incrementAndGet(), "Adam", "Kowalski", "12/12/1996", "male", 12523));
-        clients.add(new Client(counter.incrementAndGet(), "Adama", "Kowalskie", "12/12/1996", "male", 12523));
-        clients.add(new Client(counter.incrementAndGet(), "Aasda", "Kowalskie", "12/12/1996", "male", 12523));
+        clients.add(new Client(counter.incrementAndGet(), "Adam", "Kowalski", "12/10/1986", "male", "86121058018"));
+        clients.add(new Client(counter.incrementAndGet(), "Janusz", "Nowak", "01/10/1983", "male", "83011026517"));
+        clients.add(new Client(counter.incrementAndGet(), "Jan", "Baryla", "12/12/2000", "male", "00321275116"));
 
         return clients;
     }

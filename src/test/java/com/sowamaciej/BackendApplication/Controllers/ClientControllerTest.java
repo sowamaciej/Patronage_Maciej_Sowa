@@ -46,7 +46,7 @@ public class ClientControllerTest {
     @Before
     public void setUP() {
         mockMvc = MockMvcBuilders.standaloneSetup(clientController).build();
-        client = clientController.createClient(new Client(1, "name", "lastName", "12/12/1244", "male", 123));
+        client = clientController.createClient(new Client(1, "name", "lastName", "12/12/1944", "male", "44121245115"));
 
     }
 
@@ -88,7 +88,7 @@ public class ClientControllerTest {
 
     @Test
     public void shouldUpdateClient() throws Exception {
-        Client updatedClient = clientController.createClient(new Client(1, "name" + 2, "lastName" + 3, "12/12/1244", "male", 123));
+        Client updatedClient = clientController.createClient(new Client(1, "name" + 2, "lastName" + 3, "12/12/1244", "male", "123"));
 
         mockMvc.perform(put(PATH + "/" + client.getId())
                 .contentType(contentType)
@@ -96,7 +96,8 @@ public class ClientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.name", is(updatedClient.getName())))
-                .andExpect(jsonPath("$.lastName", is(updatedClient.getLastName())));
+                .andExpect(jsonPath("$.lastName", is(updatedClient.getLastName())))
+                .andExpect(jsonPath("$.pesel",is(updatedClient.getPesel())));
     }
 
 }

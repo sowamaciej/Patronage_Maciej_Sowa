@@ -16,12 +16,13 @@ public class Client {
     private String birthDate;
     @NotNull
     private String sex;
-    private long pesel;
+    @NotNull
+    private String pesel;
 
     public Client() {
     }
 
-    public Client(long id, String name, String lastName, String birthDate, String sex, long pesel) {
+    public Client(long id, String name, String lastName, String birthDate, String sex, String pesel) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -46,7 +47,7 @@ public class Client {
         return birthDate;
     }
 
-    public Long getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
@@ -74,7 +75,7 @@ public class Client {
         this.sex = sex;
     }
 
-    public void setPesel(long pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 }

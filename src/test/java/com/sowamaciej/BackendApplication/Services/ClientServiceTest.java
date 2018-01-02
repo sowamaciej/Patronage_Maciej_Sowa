@@ -30,7 +30,7 @@ public class ClientServiceTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        client = new Client(1, "name", "lastName", "12/12/1244", "male", 123);
+        client = new Client(1, "name", "lastName", "12/12/1944", "male", "44121245115");
 
     }
 
@@ -59,11 +59,12 @@ public class ClientServiceTest {
 
     @Test
     public void shouldUpdateClient() {
-        Client updateClient = new Client(1, "name" + "N", "lastName" + "B", "12/12/1244", "male", 123);
+        Client updateClient = new Client(1, "name" + "N", "lastName" + "B", "12/12/1244", "male", "123");
         when(clientService.update(client.getId(), updateClient)).thenReturn(updateClient);
         Client currentClient = clientService.update(client.getId(), updateClient);
         assertEquals("name" + "N", currentClient.getName());
         assertEquals("lastName" + "B", currentClient.getLastName());
+        assertEquals("123",currentClient.getPesel());
     }
 
     @Test
