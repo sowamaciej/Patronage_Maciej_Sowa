@@ -13,7 +13,7 @@ mvnw clean install
 ```
 mvnw spring-boot:run
 ```
-
+## Client
 ### Get all clients
 - Request:
 `GET http://localhost:8080/clients`
@@ -76,6 +76,36 @@ mvnw spring-boot:run
     }
 ]
 ```
+###  Update client
+- Request:
+`PUT http://localhost:8080/clients/{id}`
+	- Header:
+  `Content-Type:application/json`
+  - Body:
+```
+[
+    {
+    "name",
+    "lastName",
+    "birthDate",
+    "sex",
+    "pesel"
+    }
+]
+```
+- Response:
+```
+[
+    {
+    "id",
+    "name",
+    "lastName",
+    "birthDate",
+    "sex",
+    "pesel"
+    }
+]
+```
 ### Delete client by ID
 - Request:
 `DELETE http://localhost:8080/clients/{id}`
@@ -92,7 +122,140 @@ mvnw spring-boot:run
     }
 ]
 ```
-
-
-
-
+## Cars
+### Get all cars
+- Request:
+`GET http://localhost:8080/cars`
+- Response:
+```
+[
+    {
+     "id",
+     "vehicleBrand",
+     "vehicleType",
+     "vehicleModel",
+     "dateOfProduction",
+     "vinNumber",
+     "weight",
+     "fuelType",
+     "engineCapacity",
+     "numberOfSeats"
+    }
+]
+```
+### Get car by id
+- Request:
+`GET http://localhost:8080/cars/{id}`
+- Response:
+```
+[
+    {
+     "id",
+     "vehicleBrand",
+     "vehicleType",
+     "vehicleModel",
+     "dateOfProduction",
+     "vinNumber",
+     "weight",
+     "fuelType",
+     "engineCapacity",
+     "numberOfSeats"
+    }
+]
+```
+###  Add car
+- Request:
+`POST http://localhost:8080/cars`
+	- Header:
+  `Content-Type:application/json`
+  - Body:
+```
+[
+    {
+         "vehicleBrand",
+         "vehicleType",
+         "vehicleModel",
+         "dateOfProduction",
+         "vinNumber",
+         "weight",
+         "fuelType",
+         "engineCapacity",
+         "numberOfSeats"
+    }
+]
+```
+- Response:
+```
+[
+    {
+         "id",
+         "vehicleBrand",
+         "vehicleType",
+         "vehicleModel",
+         "dateOfProduction",
+         "vinNumber",
+         "weight",
+         "fuelType",
+         "engineCapacity",
+         "numberOfSeats"
+    }
+]
+```
+###  Update car
+- Request:
+`PUT http://localhost:8080/cars/{id}`
+	- Header:
+  `Content-Type:application/json`
+  - Body:
+```
+[
+    {
+         "vehicleBrand",
+         "vehicleType",
+         "vehicleModel",
+         "dateOfProduction",
+         "vinNumber",
+         "weight",
+         "fuelType",
+         "engineCapacity",
+         "numberOfSeats"
+    }
+]
+```
+- Response:
+```
+[
+    {
+         "id",
+         "vehicleBrand",
+         "vehicleType",
+         "vehicleModel",
+         "dateOfProduction",
+         "vinNumber",
+         "weight",
+         "fuelType",
+         "engineCapacity",
+         "numberOfSeats"
+    }
+]
+```
+### Delete car by id
+- Request:
+`DELETE http://localhost:8080/cars/{id}`
+- Response:
+```
+[
+    {
+     "id",
+     "vehicleBrand",
+     "vehicleType",
+     "vehicleModel",
+     "dateOfProduction",
+     "vinNumber",
+     "weight",
+     "fuelType",
+     "engineCapacity",
+     "numberOfSeats"
+    }
+]
+```
