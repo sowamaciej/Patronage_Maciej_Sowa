@@ -2,6 +2,7 @@ package com.sowamaciej.BackendApplication.Services;
 
 import com.sowamaciej.BackendApplication.Models.Car;
 import com.sowamaciej.BackendApplication.Services.CarService;
+import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,18 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 public class CarServiceTest {
 
+    private static final long ID = 1;
+    private static final String REGISTRATION_NUMBER = "ZS1241";
+    private static final String BRAND = "Ford";
+    private static final String TYPE = "Sedan";
+    private static final String MODEL = "Focus";
+    private static final String PRODUCTION_DATE = "18.10.2004";
+    private static final String VIN = "2CBH12843KL";
+    private static final double WEIGHT = 1800;
+    private static final String FUEL_TYPE = "diesel";
+    private static final double CAPACITY = 2.0;
+    private static final int SEATS = 5;
+
     private Car car;
 
     @MockBean
@@ -30,7 +43,7 @@ public class CarServiceTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        car = new Car(1, "ZS1241", "Ford", "Sedan", "Focus", "18.10.2004", "2CBH12843KL", 1800, "diesel", 2.0, 5);
+        car = new Car(ID, REGISTRATION_NUMBER, BRAND, TYPE, MODEL, PRODUCTION_DATE, VIN, WEIGHT, FUEL_TYPE, CAPACITY, SEATS);
 
     }
 
@@ -46,8 +59,8 @@ public class CarServiceTest {
     public void shouldCreateCar() {
         when(carService.create(car)).thenReturn(car);
         Car createdCar = car;
-        assertEquals("ZS1241", createdCar.getRegistrationNumber());
-        assertEquals("2CBH12843KL", createdCar.getVinNumber());
+        assertEquals(REGISTRATION_NUMBER, createdCar.getRegistrationNumber());
+        assertEquals(VIN, createdCar.getVinNumber());
     }
 
     @Test
@@ -59,7 +72,7 @@ public class CarServiceTest {
 
     @Test
     public void shouldUpdateCar() {
-        Car updateCar = new Car(1, "PO3553", "Ford", "Sedan", "Focus", "18.10.2004", "AAAA242123", 1800, "diesel", 2.0, 5);
+        Car updateCar = new Car(ID, "PO3553", BRAND, TYPE, MODEL, PRODUCTION_DATE, "AAAA242123", WEIGHT, FUEL_TYPE, CAPACITY, SEATS);
         when(carService.update(car.getId(), updateCar)).thenReturn(updateCar);
         Car currentCar = carService.update(car.getId(), updateCar);
         assertEquals("PO3553", currentCar.getRegistrationNumber());
@@ -70,9 +83,9 @@ public class CarServiceTest {
     public void shouldDeleteCarById() {
         when(carService.deleteCar(car.getId())).thenReturn(car);
         Car deletedCar = carService.deleteCar(car.getId());
-        assertEquals("ZS1241", deletedCar.getRegistrationNumber());
-        assertEquals("2CBH12843KL", deletedCar.getVinNumber());
-        assertEquals("Ford", deletedCar.getVehicleBrand());
+        assertEquals(REGISTRATION_NUMBER, deletedCar.getRegistrationNumber());
+        assertEquals(VIN, deletedCar.getVinNumber());
+        assertEquals(BRAND, deletedCar.getVehicleBrand());
 
     }
 

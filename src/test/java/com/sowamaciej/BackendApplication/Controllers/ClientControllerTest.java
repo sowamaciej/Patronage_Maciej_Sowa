@@ -28,11 +28,17 @@ import java.nio.charset.Charset;
 @SpringBootTest
 public class ClientControllerTest {
 
+    private static final long ID = 1;
+    private static final String NAME = "name";
+    private static final String LAST_NAME = "lastname";
+    private static final String BIRTH_DATE = "12/12/1944";
+    private static final String SEX = "male";
+    private static final String PESEL = "44121245115";
+
     private final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
 
-    private final static String NAME = "name";
     private final static String PATH = "/clients";
 
     private Client client;
@@ -46,7 +52,7 @@ public class ClientControllerTest {
     @Before
     public void setUP() {
         mockMvc = MockMvcBuilders.standaloneSetup(clientController).build();
-        client = clientController.createClient(new Client(1, "name", "lastName", "12/12/1944", "male", "44121245115"));
+        client = clientController.createClient(new Client(ID, NAME, LAST_NAME, BIRTH_DATE, SEX, PESEL));
 
     }
 
@@ -88,7 +94,7 @@ public class ClientControllerTest {
 
     @Test
     public void shouldUpdateClient() throws Exception {
-        Client updatedClient = clientController.createClient(new Client(1, "name" + 2, "lastName" + 3, "12/12/1244", "male", "123"));
+        Client updatedClient = clientController.createClient(new Client(ID, NAME+"ABC", LAST_NAME+"ABC", BIRTH_DATE, SEX, "123"));
 
         mockMvc.perform(put(PATH + "/" + client.getId())
                 .contentType(contentType)
@@ -97,7 +103,7 @@ public class ClientControllerTest {
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.name", is(updatedClient.getName())))
                 .andExpect(jsonPath("$.lastName", is(updatedClient.getLastName())))
-                .andExpect(jsonPath("$.pesel",is(updatedClient.getPesel())));
+                .andExpect(jsonPath("$.pesel", is(updatedClient.getPesel())));
     }
 
 }

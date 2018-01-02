@@ -26,6 +26,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class CarControllerTest {
 
+    private static final long ID = 1;
+    private static final String REGISTRATION_NUMBER = "ZS1241";
+    private static final String BRAND = "Ford";
+    private static final String TYPE = "Sedan";
+    private static final String MODEL = "Focus";
+    private static final String PRODUCTION_DATE = "18.10.2004";
+    private static final String VIN = "2CBH12843KL";
+    private static final double WEIGHT = 1800;
+    private static final String FUEL_TYPE = "diesel";
+    private static final double CAPACITY = 2.0;
+    private static final int SEATS = 5;
+
     private final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
@@ -42,7 +54,7 @@ public class CarControllerTest {
 
     @Before
     public void setUP() {
-        car = carController.createCar(new Car(1, "ZS1241", "Ford", "Sedan", "Focus", "18.10.2004", "1HBZI12JK", 1800, "diesel", 2.0, 5));
+        car = carController.createCar(new Car(ID, REGISTRATION_NUMBER, BRAND, TYPE, MODEL, PRODUCTION_DATE, VIN, WEIGHT, FUEL_TYPE, CAPACITY, SEATS));
 
         mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
     }
@@ -85,7 +97,7 @@ public class CarControllerTest {
 
     @Test
     public void updateCar() throws Exception {
-        Car updatedCar = carController.createCar(new Car(1, "ZS1241" + "1", "Ford", "Sedan", "Focus", "18.10.2004", "2CBH12843KL", 1800, "diesel", 2.0, 5));
+        Car updatedCar = carController.createCar(new Car(ID, "PO3553", BRAND, TYPE, MODEL, PRODUCTION_DATE, "AAAA242123", WEIGHT, FUEL_TYPE, CAPACITY, SEATS));
 
         mockMvc.perform(put(PATH + "/" + car.getId())
                 .contentType(contentType)

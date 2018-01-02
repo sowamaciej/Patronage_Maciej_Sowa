@@ -2,6 +2,7 @@ package com.sowamaciej.BackendApplication.Services;
 
 import com.sowamaciej.BackendApplication.Models.Client;
 import com.sowamaciej.BackendApplication.Services.ClientService;
+import com.sun.javafx.image.impl.BaseIntToByteConverter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,13 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 public class ClientServiceTest {
 
+    private static final long ID=1;
+    private static final String NAME="name";
+    private static final String LAST_NAME="lastname";
+    private static final String BIRTH_DATE = "12/12/1944";
+    private static final String SEX="male";
+    private static final String PESEL="44121245115";
+
     private Client client;
 
     @MockBean
@@ -30,7 +38,7 @@ public class ClientServiceTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        client = new Client(1, "name", "lastName", "12/12/1944", "male", "44121245115");
+        client = new Client(ID, NAME, LAST_NAME, BIRTH_DATE, SEX, PESEL);
 
     }
 
@@ -46,8 +54,8 @@ public class ClientServiceTest {
     public void shouldCreateClient() {
         when(clientService.create(client)).thenReturn(client);
         Client createdClient = client;
-        assertEquals("name", createdClient.getName());
-        assertEquals("lastName", createdClient.getLastName());
+        assertEquals(NAME, createdClient.getName());
+        assertEquals(LAST_NAME, createdClient.getLastName());
     }
 
     @Test
@@ -59,11 +67,11 @@ public class ClientServiceTest {
 
     @Test
     public void shouldUpdateClient() {
-        Client updateClient = new Client(1, "name" + "N", "lastName" + "B", "12/12/1244", "male", "123");
+        Client updateClient = new Client(ID, NAME+"ABC", LAST_NAME+"ABC", BIRTH_DATE, SEX, "123");
         when(clientService.update(client.getId(), updateClient)).thenReturn(updateClient);
         Client currentClient = clientService.update(client.getId(), updateClient);
-        assertEquals("name" + "N", currentClient.getName());
-        assertEquals("lastName" + "B", currentClient.getLastName());
+        assertEquals(NAME+"ABC", currentClient.getName());
+        assertEquals(LAST_NAME+"ABC", currentClient.getLastName());
         assertEquals("123",currentClient.getPesel());
     }
 
@@ -71,8 +79,8 @@ public class ClientServiceTest {
     public void shouldDeleteClientById() {
         when(clientService.deleteClient(client.getId())).thenReturn(client);
         Client deletedClient = clientService.deleteClient(client.getId());
-        assertEquals("name", deletedClient.getName());
-        assertEquals("male", deletedClient.getSex());
+        assertEquals(NAME, deletedClient.getName());
+        assertEquals(SEX, deletedClient.getSex());
 
     }
 
