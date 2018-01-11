@@ -21,9 +21,9 @@ public class ClientService {
         return clients;
     }
 
-    public Client findById(long id) {
+    public Client findById(Long id) {
         for (Client client : clients) {
-            if (client.getId() == id) return client;
+            if (client.getId().equals(id)) return client;
         }
         return null;
     }
@@ -34,7 +34,7 @@ public class ClientService {
         return client;
     }
 
-    public Client update(long clientId, Client client) {
+    public Client update(Long clientId, Client client) {
         Client currentClient = findById(clientId);
 
         if (currentClient != null) {
@@ -48,11 +48,11 @@ public class ClientService {
         return null;
     }
 
-    public Client deleteClient(long clientId) {
+    public Client deleteClient(Long clientId) {
         Client removedClient = findById(clientId);
         for (Iterator<Client> iterator = clients.iterator(); iterator.hasNext(); ) {
             Client client = iterator.next();
-            if (client.getId() == clientId)
+            if (client.getId().equals(clientId))
                 iterator.remove();
         }
         return removedClient;

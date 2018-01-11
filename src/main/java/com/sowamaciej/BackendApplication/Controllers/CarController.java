@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/cars")
 public class CarController {
     @Autowired
-    CarService carService;
+    private CarService carService;
 
     @GetMapping
     public List<Car> allCars() {
@@ -25,7 +25,7 @@ public class CarController {
     }
 
     @GetMapping("/{carId}")
-    public Car findCarById(@PathVariable long carId) {
+    public Car findCarById(@PathVariable Long carId) {
         return carService.findById(carId);
     }
 
@@ -35,12 +35,12 @@ public class CarController {
     }
 
     @PutMapping(value = "/{carId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Car updateClient(@Valid @PathVariable long carId, @RequestBody Car car) {
+    public Car updateClient(@Valid @PathVariable Long carId, @RequestBody Car car) {
         return carService.update(carId, car);
     }
 
     @DeleteMapping("/{carId}")
-    public Car deleteCar(@PathVariable long carId) {
+    public Car deleteCar(@PathVariable Long carId) {
         return carService.deleteCar(carId);
     }
 }

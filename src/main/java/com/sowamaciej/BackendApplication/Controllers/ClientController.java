@@ -33,7 +33,7 @@ public class ClientController {
     }
 
     @GetMapping("/{clientId}")
-    public Client findClientById(@PathVariable long clientId) {
+    public Client findClientById(@PathVariable Long clientId) {
         return clientService.findById(clientId);
     }
 
@@ -44,12 +44,12 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Client updateClient(@Valid @PathVariable long clientId, @RequestBody Client client) {
+    public Client updateClient(@Valid @PathVariable Long clientId, @RequestBody Client client) {
         return clientService.update(clientId, client);
     }
 
     @DeleteMapping("/{clientId}")
-    public Client deleteClient(@PathVariable long clientId) {
+    public Client deleteClient(@PathVariable Long clientId) {
         return clientService.deleteClient(clientId);
     }
 

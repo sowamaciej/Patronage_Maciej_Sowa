@@ -23,17 +23,13 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 public class CarServiceTest {
 
-    private static final long ID = 1;
+    private static final Long ID = new Long(1);
     private static final String REGISTRATION_NUMBER = "ZS1241";
     private static final String BRAND = "Ford";
-    private static final String TYPE = "Sedan";
-    private static final String MODEL = "Focus";
     private static final String PRODUCTION_DATE = "18.10.2004";
-    private static final String VIN = "2CBH12843KL";
-    private static final double WEIGHT = 1800;
-    private static final String FUEL_TYPE = "diesel";
-    private static final double CAPACITY = 2.0;
-    private static final int SEATS = 5;
+    private static final String RELEASE_DATE="19.11.2004";
+    private static final Double CAPACITY = 2.0;
+    private static final Integer SEATS = 5;
 
     private Car car;
 
@@ -43,7 +39,7 @@ public class CarServiceTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        car = new Car(ID, REGISTRATION_NUMBER, BRAND, TYPE, MODEL, PRODUCTION_DATE, VIN, WEIGHT, FUEL_TYPE, CAPACITY, SEATS);
+        car = new Car(ID, REGISTRATION_NUMBER, BRAND, PRODUCTION_DATE, RELEASE_DATE,CAPACITY, SEATS);
 
     }
 
@@ -60,7 +56,6 @@ public class CarServiceTest {
         when(carService.create(car)).thenReturn(car);
         Car createdCar = car;
         assertEquals(REGISTRATION_NUMBER, createdCar.getRegistrationNumber());
-        assertEquals(VIN, createdCar.getVinNumber());
     }
 
     @Test
@@ -72,11 +67,10 @@ public class CarServiceTest {
 
     @Test
     public void shouldUpdateCar() {
-        Car updateCar = new Car(ID, "PO3553", BRAND, TYPE, MODEL, PRODUCTION_DATE, "AAAA242123", WEIGHT, FUEL_TYPE, CAPACITY, SEATS);
+        Car updateCar = new Car(ID, "PO3553", BRAND, PRODUCTION_DATE,"12/12/2012", CAPACITY, SEATS);
         when(carService.update(car.getId(), updateCar)).thenReturn(updateCar);
         Car currentCar = carService.update(car.getId(), updateCar);
         assertEquals("PO3553", currentCar.getRegistrationNumber());
-        assertEquals("AAAA242123", currentCar.getVinNumber());
     }
 
     @Test
@@ -84,7 +78,6 @@ public class CarServiceTest {
         when(carService.deleteCar(car.getId())).thenReturn(car);
         Car deletedCar = carService.deleteCar(car.getId());
         assertEquals(REGISTRATION_NUMBER, deletedCar.getRegistrationNumber());
-        assertEquals(VIN, deletedCar.getVinNumber());
         assertEquals(BRAND, deletedCar.getVehicleBrand());
 
     }

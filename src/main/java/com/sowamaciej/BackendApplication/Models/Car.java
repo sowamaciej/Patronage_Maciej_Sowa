@@ -8,36 +8,29 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Car {
 
-    private long id;
+    private Long id;
     @NotNull
     private String registrationNumber;
     @NotNull
     private String vehicleBrand;
-    private String vehicleType;
     @NotNull
-    private String vehicleModel;
-    private String dateOfProduction;
+    private String dateOfFirstRegistration;
     @NotNull
-    private String vinNumber;
-    private double weight;
+    private Double engineCapacity;
     @NotNull
-    private String fuelType;
-    private double engineCapacity;
-    private int numberOfSeats;
+    private String registrationReleaseDate;
+
+    private Integer numberOfSeats;
 
     public Car() {
     }
 
-    public Car(long id, String registrationNumber, String vehicleBrand, String vehicleType, String vehicleModel, String dateOfProduction, String vinNumber, double weight, String fuelType, double engineCapacity, int numberOfSeats) {
+    public Car(Long id, String registrationNumber, String vehicleBrand, String dateOfFirstRegistration,String registrationReleaseDate, Double engineCapacity, Integer numberOfSeats) {
         this.id = id;
         this.registrationNumber = registrationNumber;
         this.vehicleBrand = vehicleBrand;
-        this.vehicleType = vehicleType;
-        this.vehicleModel = vehicleModel;
-        this.dateOfProduction = dateOfProduction;
-        this.vinNumber = vinNumber;
-        this.weight = weight;
-        this.fuelType = fuelType;
+        this.dateOfFirstRegistration = dateOfFirstRegistration;
+        this.registrationReleaseDate=registrationReleaseDate;
         this.engineCapacity = engineCapacity;
         this.numberOfSeats = numberOfSeats;
     }
@@ -46,8 +39,8 @@ public class Car {
         return id;
     }
 
-    public String getDateOfProduction() {
-        return dateOfProduction;
+    public String getDateOfFirstRegistration() {
+        return dateOfFirstRegistration;
     }
 
     public String getRegistrationNumber() {
@@ -58,35 +51,19 @@ public class Car {
         return vehicleBrand;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public String getVehicleModel() {
-        return vehicleModel;
-    }
-
-    public String getVinNumber() {
-        return vinNumber;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
-    public double getEngineCapacity() {
+    public Double getEngineCapacity() {
         return engineCapacity;
     }
 
-    public int getNumberOfSeats() {
+    public Integer getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setId(long id) {
+    public String getRegistrationReleaseDate() {
+        return registrationReleaseDate;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -98,38 +75,20 @@ public class Car {
         this.vehicleBrand = vehicleBrand;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
-    }
-
-    public void setVehicleModel(String vehicleModel) {
-        this.vehicleModel = vehicleModel;
-    }
-
-    public void setVinNumber(String vinNumber) {
-        this.vinNumber = vinNumber;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    public void setEngineCapacity(double engineCapacity) {
+    public void setEngineCapacity(Double engineCapacity) {
         this.engineCapacity = engineCapacity;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(Integer numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
-
-    public void setDateOfProduction(String dateOfProduction) {
-        this.dateOfProduction = dateOfProduction;
+    public void setDateOfFirstRegistration(String dateOfFirstRegistration) {
+        this.dateOfFirstRegistration = dateOfFirstRegistration;
     }
 
+    public void setRegistrationReleaseDate(String registrationReleaseDate) {
+        this.registrationReleaseDate = registrationReleaseDate;
+    }
 }
 

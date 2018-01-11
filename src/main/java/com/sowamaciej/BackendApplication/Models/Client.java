@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Client {
 
-    private long id;
+    private Long id;
     @NotNull
     private String name;
     @NotNull
@@ -22,7 +22,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(long id, String name, String lastName, String birthDate, String sex, String pesel) {
+    public Client(Long id, String name, String lastName, String birthDate, String sex, String pesel) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -55,7 +55,7 @@ public class Client {
         return sex;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
