@@ -4,15 +4,19 @@ import com.sowamaciej.BackendApplication.Models.Car;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.List;
 import java.util.Iterator;
-
 @Service
 public class ListCarService implements CarService {
     private static final AtomicLong counter = new AtomicLong();
     private static List<Car> cars;
 
+    public ListCarService()
+    {
+        cars=new ArrayList<>();
+    }
     @Override
     public List<Car> findAllCars() {
         return cars;

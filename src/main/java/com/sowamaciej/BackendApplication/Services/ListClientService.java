@@ -3,6 +3,7 @@ package com.sowamaciej.BackendApplication.Services;
 import com.sowamaciej.BackendApplication.Models.Client;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public class ListClientService implements ClientService {
     private static final AtomicLong counter = new AtomicLong();
     private static List<Client> clients;
 
+    public ListClientService(){
+        clients=new ArrayList<>();
+    }
     @Override
     public List<Client> findAllClients() {
         return clients;
