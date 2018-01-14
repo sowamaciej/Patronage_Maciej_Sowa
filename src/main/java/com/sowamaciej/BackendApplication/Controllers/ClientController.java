@@ -44,7 +44,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Client updateClient(@Valid @PathVariable Long clientId, @RequestBody Client client) {
+    public Client updateClient(@Valid @PathVariable Long clientId,@Valid @RequestBody Client client) {
         return clientService.update(clientId, client);
     }
 
