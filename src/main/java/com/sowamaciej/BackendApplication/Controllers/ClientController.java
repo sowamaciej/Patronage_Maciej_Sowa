@@ -2,6 +2,7 @@ package com.sowamaciej.BackendApplication.Controllers;
 
 import com.sowamaciej.BackendApplication.Models.Client;
 import com.sowamaciej.BackendApplication.Services.ClientService;
+import com.sowamaciej.BackendApplication.Services.H2ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,6 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @Autowired
-    ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @GetMapping
     public List<Client> users() {
@@ -44,7 +41,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Client updateClient(@Valid @PathVariable Long clientId,@Valid @RequestBody Client client) {
+    public Client updateClient(@Valid @PathVariable Long clientId, @Valid @RequestBody Client client) {
         return clientService.update(clientId, client);
     }
 
