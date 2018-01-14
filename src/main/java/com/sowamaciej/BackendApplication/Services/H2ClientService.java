@@ -13,7 +13,7 @@ public class H2ClientService implements ClientService {
     private final ClientRepository repository;
 
     @Autowired
-    H2ClientService(ClientRepository repository) {
+    public H2ClientService(ClientRepository repository) {
         this.repository = repository;
     }
 
