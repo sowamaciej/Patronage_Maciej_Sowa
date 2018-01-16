@@ -13,6 +13,24 @@ mvnw clean install
 ```
 mvnw spring-boot:run
 ```
+### Swagger API documentation
+
+* http://localhost:8080/swagger-ui.html
+* http://localhost:8080/v2/api-docs
+### Validation
+| Option | nullable |range|
+| ------ | ----------- |------|
+| registrationNumber  | no | max 10, first and second A-Z without repetition, then numbers
+| numberOfSeats |yes |1-6|
+| vehicleBrand |no  |HONDA,FIAT,SKODA
+|engineCapacity|no|50 - 6999
+|B - dateOfFirstRegistration|no|01/01/1900 - now()
+|registrationReleaseDate|no| B - now()
+### Environment variable
++ H2_STORAGE_ENABLED
+  - TRUE - h2 implementation
+  - FALSE - list implementation
+  - default - list implementation
 ## Client
 ### Get all clients
 - Request:
@@ -131,14 +149,11 @@ mvnw spring-boot:run
 [
     {
      "id",
+     "registrationNumber",
      "vehicleBrand",
-     "vehicleType",
-     "vehicleModel",
-     "dateOfProduction",
-     "vinNumber",
-     "weight",
-     "fuelType",
+     "dateOfFirstRegistration",
      "engineCapacity",
+     "registrationReleaseDate",
      "numberOfSeats"
     }
 ]
@@ -151,14 +166,11 @@ mvnw spring-boot:run
 [
     {
      "id",
+     "registrationNumber",
      "vehicleBrand",
-     "vehicleType",
-     "vehicleModel",
-     "dateOfProduction",
-     "vinNumber",
-     "weight",
-     "fuelType",
+     "dateOfFirstRegistration",
      "engineCapacity",
+     "registrationReleaseDate"
      "numberOfSeats"
     }
 ]
@@ -172,14 +184,11 @@ mvnw spring-boot:run
 ```
 [
     {
+         "registrationNumber",
          "vehicleBrand",
-         "vehicleType",
-         "vehicleModel",
-         "dateOfProduction",
-         "vinNumber",
-         "weight",
-         "fuelType",
+         "dateOfFirstRegistration",
          "engineCapacity",
+         "registrationReleaseDate",
          "numberOfSeats"
     }
 ]
@@ -189,14 +198,11 @@ mvnw spring-boot:run
 [
     {
          "id",
+         "registrationNumber",
          "vehicleBrand",
-         "vehicleType",
-         "vehicleModel",
-         "dateOfProduction",
-         "vinNumber",
-         "weight",
-         "fuelType",
+         "dateOfFirstRegistration",
          "engineCapacity",
+         "registrationReleaseDate",
          "numberOfSeats"
     }
 ]
@@ -210,14 +216,11 @@ mvnw spring-boot:run
 ```
 [
     {
+         "registrationNumber",
          "vehicleBrand",
-         "vehicleType",
-         "vehicleModel",
-         "dateOfProduction",
-         "vinNumber",
-         "weight",
-         "fuelType",
+         "dateOfFirstRegistration",
          "engineCapacity",
+         "registrationReleaseDate",
          "numberOfSeats"
     }
 ]
@@ -227,14 +230,11 @@ mvnw spring-boot:run
 [
     {
          "id",
+         "registrationNumber",
          "vehicleBrand",
-         "vehicleType",
-         "vehicleModel",
-         "dateOfProduction",
-         "vinNumber",
-         "weight",
-         "fuelType",
+         "dateOfFirstRegistration",
          "engineCapacity",
+         "registrationReleaseDate",
          "numberOfSeats"
     }
 ]
@@ -247,14 +247,11 @@ mvnw spring-boot:run
 [
     {
      "id",
+     "registrationNumber",
      "vehicleBrand",
-     "vehicleType",
-     "vehicleModel",
-     "dateOfProduction",
-     "vinNumber",
-     "weight",
-     "fuelType",
+     "dateOfFirstRegistration",
      "engineCapacity",
+     "registrationReleaseDate",
      "numberOfSeats"
     }
 ]
