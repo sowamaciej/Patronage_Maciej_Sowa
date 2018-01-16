@@ -1,36 +1,50 @@
 package com.sowamaciej.BackendApplication.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sowamaciej.BackendApplication.Validators.DateInRange;
+import com.sowamaciej.BackendApplication.Validators.ReleaseDateInRange;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.*;
+import java.util.Date;
 
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity
+@ApiModel(value="Car")
+@ReleaseDateInRange
 public class Car {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
     @Pattern(regexp = "^(?!(.).*\1)[A-Z]{2}[0-9]{1,8}$")
     private String registrationNumber;
+
     @NotNull
     @Pattern(regexp = "HONDA|FIAT|SKODA")
     private String vehicleBrand;
+
     @NotNull
-    private String dateOfFirstRegistration;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateInRange
+    private Date dateOfFirstRegistration;
+
     @Min(50)
     @Max(6999)
     @NotNull
     private Integer engineCapacity;
+
     @NotNull
-    private String registrationReleaseDate;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date registrationReleaseDate;
 
     @Min(1)
     @Max(6)
@@ -39,7 +53,7 @@ public class Car {
     public Car() {
     }
 
-    public Car( String registrationNumber, String vehicleBrand, String dateOfFirstRegistration, String registrationReleaseDate, Integer engineCapacity, Integer numberOfSeats) {
+    public Car(String registrationNumber, String vehicleBrand, Date dateOfFirstRegistration, Date registrationReleaseDate, Integer engineCapacity, Integer numberOfSeats) {
         this.registrationNumber = registrationNumber;
         this.vehicleBrand = vehicleBrand;
         this.dateOfFirstRegistration = dateOfFirstRegistration;
@@ -52,7 +66,7 @@ public class Car {
         return id;
     }
 
-    public String getDateOfFirstRegistration() {
+    public Date getDateOfFirstRegistration() {
         return dateOfFirstRegistration;
     }
 
@@ -72,7 +86,7 @@ public class Car {
         return numberOfSeats;
     }
 
-    public String getRegistrationReleaseDate() {
+    public Date getRegistrationReleaseDate() {
         return registrationReleaseDate;
     }
 
@@ -96,11 +110,11 @@ public class Car {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public void setDateOfFirstRegistration(String dateOfFirstRegistration) {
+    public void setDateOfFirstRegistration(Date dateOfFirstRegistration) {
         this.dateOfFirstRegistration = dateOfFirstRegistration;
     }
 
-    public void setRegistrationReleaseDate(String registrationReleaseDate) {
+    public void setRegistrationReleaseDate(Date registrationReleaseDate) {
         this.registrationReleaseDate = registrationReleaseDate;
     }
 }

@@ -17,8 +17,13 @@ import javax.validation.Valid;
 @RequestMapping("/cars")
 public class CarController {
 
-    @Autowired
+
     private CarService carService;
+
+    @Autowired
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     @GetMapping
     public List<Car> allCars() {
