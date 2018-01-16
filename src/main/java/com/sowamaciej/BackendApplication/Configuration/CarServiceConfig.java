@@ -17,9 +17,8 @@ public class CarServiceConfig {
     private final CarRepository carRepository;
 
     @Autowired
-    public CarServiceConfig(CarRepository   carRepository)
-    {
-        this.carRepository=carRepository;
+    public CarServiceConfig(CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
     @Bean

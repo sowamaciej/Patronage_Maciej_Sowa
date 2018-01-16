@@ -17,24 +17,21 @@ public class ClientServiceConfig {
     private final ClientRepository clientRepository;
 
     @Autowired
-    public ClientServiceConfig (ClientRepository clientRepository)
-    {
-        this.clientRepository=clientRepository;
+    public ClientServiceConfig(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 
     @Bean
     @Primary
-    @ConditionalOnProperty(name="H2_STORAGE_ENABLED",havingValue = "TRUE")
-    public H2ClientService h2ClientService()
-    {
+    @ConditionalOnProperty(name = "H2_STORAGE_ENABLED", havingValue = "TRUE")
+    public H2ClientService h2ClientService() {
         return new H2ClientService(clientRepository);
     }
 
     @Bean
     @Primary
-    @ConditionalOnProperty(name="H2_STORAGE_ENABLED",havingValue = "FALSE", matchIfMissing = true)
-    public ListClientService ListClientService()
-    {
+    @ConditionalOnProperty(name = "H2_STORAGE_ENABLED", havingValue = "FALSE", matchIfMissing = true)
+    public ListClientService ListClientService() {
         return new ListClientService();
     }
 }
