@@ -8,13 +8,12 @@ public interface CarService {
 
     List<Car> findAllCars();
 
-    Car findById(Long id) ;
+    Car findById(Long id);
 
-    Car create(Car car) ;
+    Car create(Car car);
 
-    Car update(Long carId, Car car) ;
+    Car update(Long carId, Car car);
 
-
-    Car deleteCar(Long carId) ;
+    Car deleteCar(Long carId);
 
 }

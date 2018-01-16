@@ -4,10 +4,9 @@ import com.sowamaciej.BackendApplication.Models.Client;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLong;
-
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class ListClientService implements ClientService {
@@ -15,9 +14,10 @@ public class ListClientService implements ClientService {
     private static final AtomicLong counter = new AtomicLong();
     private static List<Client> clients;
 
-    public ListClientService(){
-        clients=new ArrayList<>();
+    public ListClientService() {
+        clients = new ArrayList<>();
     }
+
     @Override
     public List<Client> findAllClients() {
         return clients;
@@ -26,7 +26,7 @@ public class ListClientService implements ClientService {
     @Override
     public Client findById(Long id) {
         for (Client client : clients) {
-            if (client.getId() == id) return client;
+            if (client.getId().equals(id)) return client;
         }
         return null;
     }
@@ -58,7 +58,7 @@ public class ListClientService implements ClientService {
         Client removedClient = findById(clientId);
         for (Iterator<Client> iterator = clients.iterator(); iterator.hasNext(); ) {
             Client client = iterator.next();
-            if (client.getId() == clientId)
+            if (client.getId().equals(clientId))
                 iterator.remove();
         }
         return removedClient;

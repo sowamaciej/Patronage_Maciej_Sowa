@@ -1,22 +1,22 @@
 package com.sowamaciej.BackendApplication.Services;
 
 import com.sowamaciej.BackendApplication.Models.Car;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+
 @Service
 public class ListCarService implements CarService {
     private static final AtomicLong counter = new AtomicLong();
     private static List<Car> cars;
 
-    public ListCarService()
-    {
-        cars=new ArrayList<>();
+    public ListCarService() {
+        cars = new ArrayList<>();
     }
+
     @Override
     public List<Car> findAllCars() {
         return cars;
@@ -25,7 +25,7 @@ public class ListCarService implements CarService {
     @Override
     public Car findById(Long id) {
         for (Car car : cars) {
-            if (car.getId() == id) return car;
+            if (car.getId().equals(id)) return car;
         }
         return null;
     }
@@ -56,7 +56,7 @@ public class ListCarService implements CarService {
         Car removedCar = findById(carId);
         for (Iterator<Car> iterator = cars.iterator(); iterator.hasNext(); ) {
             Car car = iterator.next();
-            if (car.getId() == carId)
+            if (car.getId().equals(carId))
                 iterator.remove();
         }
         return removedCar;
