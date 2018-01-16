@@ -1,6 +1,5 @@
 package com.sowamaciej.BackendApplication.Validators;
 
-import javax.servlet.http.HttpServlet;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.text.ParseException;

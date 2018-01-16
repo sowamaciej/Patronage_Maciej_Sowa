@@ -16,7 +16,7 @@ import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity
-@ApiModel(value="Car")
+@ApiModel(value = "Car")
 @ReleaseDateInRange
 public class Car {
 
