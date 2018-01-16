@@ -1,13 +1,12 @@
 package com.sowamaciej.BackendApplication.Controllers;
 
-import static org.hamcrest.Matchers.*;
-
-import com.sowamaciej.BackendApplication.Controllers.ClientController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sowamaciej.BackendApplication.Models.Client;
+import com.sowamaciej.BackendApplication.Services.ClientService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -15,13 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import java.nio.charset.Charset;
 
 
 @RunWith(SpringRunner.class)
@@ -34,6 +34,8 @@ public class ClientControllerTest {
     private static final String BIRTH_DATE = "12/12/1944";
     private static final String SEX = "male";
     private static final String PESEL = "44121245115";
+    private final SimpleDateFormat dateParser = new SimpleDateFormat("dd/mm/yyyy");
+
 
     private final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -45,45 +47,60 @@ public class ClientControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ClientController clientController;
+    private ClientService clientService;
     @Autowired
     private ObjectMapper objectMapper;
 
     @Before
     public void setUP() {
-        mockMvc = MockMvcBuilders.standaloneSetup(clientController).build();
-        client = clientController.createClient(new Client(ID, NAME, LAST_NAME, BIRTH_DATE, SEX, PESEL));
-
+        MockitoAnnotations.initMocks(this);
+        try {
+            client = new Client(NAME, LAST_NAME, dateParser.parse(BIRTH_DATE), SEX, PESEL);
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+        final ClientController clientController = new ClientController(clientService);
+        mockMvc = MockMvcBuilders.standaloneSetup(new ClientController(clientService)).build();
     }
 
     @Test
     public void shouldFindAllClients() throws Exception {
+        List<Client> clients = clientService.findAllClients();
         mockMvc.perform(get(PATH))
                 .andExpect(content().contentType(contentType))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(clientController.users().size())));
+                .andExpect(status().isOk());
     }
 
     @Test
     public void shouldFindClientById() throws Exception {
-        mockMvc.perform(get(PATH + "/" + client.getId()))
+        clientService.create(client);
+        Client created = clientService.findById(client.getId());
+        mockMvc.perform(get(PATH + "/" + created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.id", is(client.getId().intValue())));
+                .andExpect(jsonPath("$.id", is(created.getId().intValue())));
 
     }
 
     @Test
     public void shouldCreateClient() throws Exception {
+        Client createClient;
+        try {
+            createClient = new Client(NAME, LAST_NAME, dateParser.parse(BIRTH_DATE), SEX, PESEL);
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+        createClient = clientService.create(createClient);
         mockMvc.perform(post(PATH)
                 .contentType(contentType)
-                .content(objectMapper.writeValueAsString(client)))
+                .content(objectMapper.writeValueAsString(createClient)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
     public void shouldDeleteClient() throws Exception {
+        clientService.create(client);
         mockMvc.perform(delete(PATH + "/" + client.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -94,16 +111,22 @@ public class ClientControllerTest {
 
     @Test
     public void shouldUpdateClient() throws Exception {
-        Client updatedClient = clientController.createClient(new Client(ID, NAME+"ABC", LAST_NAME+"ABC", BIRTH_DATE, SEX, "123"));
-
-        mockMvc.perform(put(PATH + "/" + client.getId())
+        Client updatedClient;
+        try {
+            updatedClient = new Client(NAME + "ABC", LAST_NAME + "ABC", dateParser.parse(BIRTH_DATE), SEX, "123");
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+        Client created = clientService.create(client);
+        Client updated = clientService.update(client.getId(), updatedClient);
+        mockMvc.perform(put(PATH + "/" + created.getId())
                 .contentType(contentType)
-                .content(objectMapper.writeValueAsString(updatedClient)))
+                .content(objectMapper.writeValueAsString(updated)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.name", is(updatedClient.getName())))
-                .andExpect(jsonPath("$.lastName", is(updatedClient.getLastName())))
-                .andExpect(jsonPath("$.pesel", is(updatedClient.getPesel())));
+                .andExpect(jsonPath("$.name", is(updated.getName())))
+                .andExpect(jsonPath("$.lastName", is(updated.getLastName())))
+                .andExpect(jsonPath("$.pesel", is(updated.getPesel())));
     }
 
 }
