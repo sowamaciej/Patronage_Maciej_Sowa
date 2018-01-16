@@ -2,6 +2,7 @@ package com.sowamaciej.BackendApplication.Controllers;
 
 import com.sowamaciej.BackendApplication.Models.Client;
 import com.sowamaciej.BackendApplication.Services.ClientService;
+import com.sowamaciej.BackendApplication.Services.H2ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,10 @@ import java.util.List;
 @RequestMapping("/clients")
 public class ClientController {
 
-    @Autowired
     private ClientService clientService;
 
     @Autowired
-    ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
@@ -33,7 +33,7 @@ public class ClientController {
     }
 
     @GetMapping("/{clientId}")
-    public Client findClientById(@PathVariable long clientId) {
+    public Client findClientById(@PathVariable Long clientId) {
         return clientService.findById(clientId);
     }
 
@@ -44,12 +44,12 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Client updateClient(@Valid @PathVariable long clientId, @RequestBody Client client) {
+    public Client updateClient(@Valid @PathVariable Long clientId, @Valid @RequestBody Client client) {
         return clientService.update(clientId, client);
     }
 
     @DeleteMapping("/{clientId}")
-    public Client deleteClient(@PathVariable long clientId) {
+    public Client deleteClient(@PathVariable Long clientId) {
         return clientService.deleteClient(clientId);
     }
 

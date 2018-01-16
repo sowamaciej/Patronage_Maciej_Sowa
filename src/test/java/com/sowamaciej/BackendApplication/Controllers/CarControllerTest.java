@@ -1,11 +1,12 @@
 package com.sowamaciej.BackendApplication.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sowamaciej.BackendApplication.Controllers.CarController;
 import com.sowamaciej.BackendApplication.Models.Car;
+import com.sowamaciej.BackendApplication.Services.CarService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -14,29 +15,27 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CarControllerTest {
 
-    private static final long ID = 1;
-    private static final String REGISTRATION_NUMBER = "ZS1241";
-    private static final String BRAND = "Ford";
-    private static final String TYPE = "Sedan";
-    private static final String MODEL = "Focus";
-    private static final String PRODUCTION_DATE = "18.10.2004";
-    private static final String VIN = "2CBH12843KL";
-    private static final double WEIGHT = 1800;
-    private static final String FUEL_TYPE = "diesel";
-    private static final double CAPACITY = 2.0;
-    private static final int SEATS = 5;
+    private static final Long ID = 1L;
+    private static final String REGISTRATION_NUMBER = "AA11212";
+    private static final String BRAND = "HONDA";
+    private static final String PRODUCTION_DATE = "18/10/2004";
+    private static final String RELEASE_DATE = "19/11/2004";
+    private static final Integer CAPACITY = 67;
+    private static final Integer SEATS = 5;
+    private final SimpleDateFormat dateParser = new SimpleDateFormat("dd/mm/yyyy");
+
 
     private final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -44,40 +43,48 @@ public class CarControllerTest {
     private final static String PATH = "/cars";
 
     private Car car;
-
-    private MockMvc mockMvc;
-
-    @Autowired
-    private CarController carController;
     @Autowired
     private ObjectMapper objectMapper;
 
+    private MockMvc mockMvc;
+    @Autowired
+    private CarService carService;
+
     @Before
     public void setUP() {
-        car = carController.createCar(new Car(ID, REGISTRATION_NUMBER, BRAND, TYPE, MODEL, PRODUCTION_DATE, VIN, WEIGHT, FUEL_TYPE, CAPACITY, SEATS));
+        MockitoAnnotations.initMocks(this);
+        try {
+            car = new Car(REGISTRATION_NUMBER, BRAND, dateParser.parse(PRODUCTION_DATE), dateParser.parse(RELEASE_DATE), CAPACITY, SEATS);
 
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+        final CarController carController = new CarController(carService);
         mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void shouldGetAllCars() throws Exception {
+        List<Car> cars = carService.findAllCars();
         mockMvc.perform(get(PATH))
                 .andExpect(content().contentType(contentType))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(carController.allCars().size())));
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void findById() throws Exception {
-        mockMvc.perform(get(PATH + "/" + car.getId()))
+    public void shouldFindCarById() throws Exception {
+        carService.create(car);
+        Car created = carService.findById(car.getId());
+        mockMvc.perform(get(PATH + "/" + created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.id", is(car.getId().intValue())));
+                .andExpect(jsonPath("$.id", is(created.getId().intValue())));
 
     }
 
     @Test
     public void createCar() throws Exception {
+        carService.create(car);
         mockMvc.perform(post(PATH)
                 .contentType(contentType)
                 .content(objectMapper.writeValueAsString(car)))
@@ -87,25 +94,31 @@ public class CarControllerTest {
 
     @Test
     public void deleteCar() throws Exception {
+        carService.create(car);
         mockMvc.perform(delete(PATH + "/" + car.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.id", is(car.getId().intValue())));
-
-
     }
 
     @Test
     public void updateCar() throws Exception {
-        Car updatedCar = carController.createCar(new Car(ID, "PO3553", BRAND, TYPE, MODEL, PRODUCTION_DATE, "AAAA242123", WEIGHT, FUEL_TYPE, CAPACITY, SEATS));
+        Car updatedCar;
+        try {
+            updatedCar = new Car("PO3553", BRAND, dateParser.parse(PRODUCTION_DATE), dateParser.parse(RELEASE_DATE), CAPACITY, SEATS);
 
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+        Car created = carService.create(car);
+        Car updated = carService.update(created.getId(), updatedCar);
         mockMvc.perform(put(PATH + "/" + car.getId())
                 .contentType(contentType)
-                .content(objectMapper.writeValueAsString(updatedCar)))
+                .content(objectMapper.writeValueAsString(updated)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.vehicleBrand", is(updatedCar.getVehicleBrand())))
-                .andExpect(jsonPath("$.registrationNumber", is(updatedCar.getRegistrationNumber())));
+                .andExpect(jsonPath("$.vehicleBrand", is(updated.getVehicleBrand())))
+                .andExpect(jsonPath("$.registrationNumber", is(updated.getRegistrationNumber())));
     }
 
 }

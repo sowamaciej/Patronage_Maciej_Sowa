@@ -1,43 +1,63 @@
 package com.sowamaciej.BackendApplication.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sowamaciej.BackendApplication.Validators.DateInRange;
+import com.sowamaciej.BackendApplication.Validators.ReleaseDateInRange;
+import io.swagger.annotations.ApiModel;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.validation.constraints.*;
+import java.util.Date;
 
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Entity
+@ApiModel(value = "Car")
+@ReleaseDateInRange
 public class Car {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @NotNull
+    @Pattern(regexp = "^(?!(.).*\1)[A-Z]{2}[0-9]{1,8}$")
     private String registrationNumber;
+
     @NotNull
+    @Pattern(regexp = "HONDA|FIAT|SKODA")
     private String vehicleBrand;
-    private String vehicleType;
+
     @NotNull
-    private String vehicleModel;
-    private String dateOfProduction;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateInRange
+    private Date dateOfFirstRegistration;
+
+    @Min(50)
+    @Max(6999)
     @NotNull
-    private String vinNumber;
-    private double weight;
+    private Integer engineCapacity;
+
     @NotNull
-    private String fuelType;
-    private double engineCapacity;
-    private int numberOfSeats;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date registrationReleaseDate;
+
+    @Min(1)
+    @Max(6)
+    private Integer numberOfSeats;
 
     public Car() {
     }
 
-    public Car(long id, String registrationNumber, String vehicleBrand, String vehicleType, String vehicleModel, String dateOfProduction, String vinNumber, double weight, String fuelType, double engineCapacity, int numberOfSeats) {
-        this.id = id;
+    public Car(String registrationNumber, String vehicleBrand, Date dateOfFirstRegistration, Date registrationReleaseDate, Integer engineCapacity, Integer numberOfSeats) {
         this.registrationNumber = registrationNumber;
         this.vehicleBrand = vehicleBrand;
-        this.vehicleType = vehicleType;
-        this.vehicleModel = vehicleModel;
-        this.dateOfProduction = dateOfProduction;
-        this.vinNumber = vinNumber;
-        this.weight = weight;
-        this.fuelType = fuelType;
+        this.dateOfFirstRegistration = dateOfFirstRegistration;
+        this.registrationReleaseDate = registrationReleaseDate;
         this.engineCapacity = engineCapacity;
         this.numberOfSeats = numberOfSeats;
     }
@@ -46,8 +66,8 @@ public class Car {
         return id;
     }
 
-    public String getDateOfProduction() {
-        return dateOfProduction;
+    public Date getDateOfFirstRegistration() {
+        return dateOfFirstRegistration;
     }
 
     public String getRegistrationNumber() {
@@ -58,35 +78,19 @@ public class Car {
         return vehicleBrand;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public String getVehicleModel() {
-        return vehicleModel;
-    }
-
-    public String getVinNumber() {
-        return vinNumber;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
-    public double getEngineCapacity() {
+    public Integer getEngineCapacity() {
         return engineCapacity;
     }
 
-    public int getNumberOfSeats() {
+    public Integer getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setId(long id) {
+    public Date getRegistrationReleaseDate() {
+        return registrationReleaseDate;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -98,38 +102,20 @@ public class Car {
         this.vehicleBrand = vehicleBrand;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
-    }
-
-    public void setVehicleModel(String vehicleModel) {
-        this.vehicleModel = vehicleModel;
-    }
-
-    public void setVinNumber(String vinNumber) {
-        this.vinNumber = vinNumber;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    public void setEngineCapacity(double engineCapacity) {
+    public void setEngineCapacity(Integer engineCapacity) {
         this.engineCapacity = engineCapacity;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(Integer numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
-
-    public void setDateOfProduction(String dateOfProduction) {
-        this.dateOfProduction = dateOfProduction;
+    public void setDateOfFirstRegistration(Date dateOfFirstRegistration) {
+        this.dateOfFirstRegistration = dateOfFirstRegistration;
     }
 
+    public void setRegistrationReleaseDate(Date registrationReleaseDate) {
+        this.registrationReleaseDate = registrationReleaseDate;
+    }
 }
 
