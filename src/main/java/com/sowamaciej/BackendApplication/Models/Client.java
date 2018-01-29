@@ -3,6 +3,7 @@ package com.sowamaciej.BackendApplication.Models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
@@ -19,22 +20,28 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty("The database generated client ID")
     private Long id;
 
     @NotNull
+    @ApiModelProperty("Name of the client")
     private String name;
 
     @NotNull
+    @ApiModelProperty("Surname of the client")
     private String lastName;
 
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @ApiModelProperty("Date of birth: dd/mm/yyyy")
     private Date birthDate;
 
     @NotNull
+    @ApiModelProperty("Client gender")
     private String sex;
 
     @NotNull
+    @ApiModelProperty("Personal identity number")
     private String pesel;
 
     public Client() {
