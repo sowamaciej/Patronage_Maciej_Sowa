@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sowamaciej.BackendApplication.Validators.DateInRange;
 import com.sowamaciej.BackendApplication.Validators.ReleaseDateInRange;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,32 +23,39 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty("The database generated car ID")
     private Long id;
 
     @NotNull
     @Pattern(regexp = "^(?!(.).*\1)[A-Z]{2}[0-9]{1,8}$")
+    @ApiModelProperty("Car registration number ")
     private String registrationNumber;
 
     @NotNull
     @Pattern(regexp = "HONDA|FIAT|SKODA")
+    @ApiModelProperty("Car brand")
     private String vehicleBrand;
 
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateInRange
+    @ApiModelProperty("Date of first registration: dd/mm/yyyy")
     private Date dateOfFirstRegistration;
 
     @Min(50)
     @Max(6999)
     @NotNull
+    @ApiModelProperty("Engine capacity")
     private Integer engineCapacity;
 
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @ApiModelProperty("Registration release date: dd/mm/yyyy")
     private Date registrationReleaseDate;
 
     @Min(1)
     @Max(6)
+    @ApiModelProperty("Numbers of seat")
     private Integer numberOfSeats;
 
     public Car() {

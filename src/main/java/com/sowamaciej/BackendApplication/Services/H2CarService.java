@@ -1,5 +1,6 @@
 package com.sowamaciej.BackendApplication.Services;
 
+import com.sowamaciej.BackendApplication.Exception.CarNotFoundException;
 import com.sowamaciej.BackendApplication.Models.Car;
 import com.sowamaciej.BackendApplication.Repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class H2CarService implements CarService {
 
     @Override
     public Car findById(Long id) {
+        if (!repository.exists(id)) {
+            throw new CarNotFoundException();
+        }
         return repository.findOne(id);
     }
 
@@ -35,7 +39,9 @@ public class H2CarService implements CarService {
     @Override
     public Car update(Long carId, Car car) {
         Car currentCar = findById(carId);
-
+        if (!repository.exists(carId)) {
+            throw new CarNotFoundException();
+        }
         if (currentCar != null) {
             currentCar.setRegistrationNumber(car.getRegistrationNumber());
             currentCar.setVehicleBrand(car.getVehicleBrand());
@@ -50,6 +56,9 @@ public class H2CarService implements CarService {
 
     @Override
     public Car deleteCar(Long carId) {
+        if (!repository.exists(carId)) {
+            throw new CarNotFoundException();
+        }
         Car removedCar = findById(carId);
         repository.delete(carId);
         return removedCar;

@@ -31,6 +31,11 @@ mvnw spring-boot:run
   - TRUE - h2 implementation
   - FALSE - list implementation
   - default - list implementation
+### Available response types
++ XML
+    - header:`Accept:application/xml`
++ JSON
+    - header: `Content-Type:application/json`
 ## Client
 ### Get all clients
 - Request:
