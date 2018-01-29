@@ -26,29 +26,29 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping
+    @GetMapping(produces = {"application/json","application/xml"})
     public List<Client> users() {
         List<Client> clients = clientService.findAllClients();
         return clients;
     }
 
-    @GetMapping("/{clientId}")
+    @GetMapping(value="/{clientId}",produces = {"application/json","application/xml"})
     public Client findClientById(@PathVariable Long clientId) {
         return clientService.findById(clientId);
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces = {"application/json","application/xml"})
     public Client createClient(@Valid @RequestBody Client client) {
         return clientService.create(client);
     }
 
-    @PutMapping(value = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = {"application/json","application/xml"})
     public Client updateClient(@Valid @PathVariable Long clientId, @Valid @RequestBody Client client) {
         return clientService.update(clientId, client);
     }
 
-    @DeleteMapping("/{clientId}")
+    @DeleteMapping(value="/{clientId}",produces = {"application/json","application/xml"})
     public Client deleteClient(@PathVariable Long clientId) {
         return clientService.deleteClient(clientId);
     }
