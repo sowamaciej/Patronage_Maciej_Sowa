@@ -1,5 +1,6 @@
 package com.sowamaciej.BackendApplication.Services;
 
+import com.sowamaciej.BackendApplication.Exception.ClientNotFoundException;
 import com.sowamaciej.BackendApplication.Models.Client;
 import com.sowamaciej.BackendApplication.Repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class H2ClientService implements ClientService {
 
     @Override
     public Client findById(Long id) {
+        if (!repository.exists(id)) {
+            throw new ClientNotFoundException();
+        }
         return repository.findOne(id);
     }
 
@@ -34,6 +38,9 @@ public class H2ClientService implements ClientService {
 
     @Override
     public Client update(Long clientId, Client client) {
+        if (!repository.exists(clientId)) {
+            throw new ClientNotFoundException();
+        }
         Client currentClient = findById(clientId);
 
         if (currentClient != null) {
@@ -49,6 +56,9 @@ public class H2ClientService implements ClientService {
 
     @Override
     public Client deleteClient(Long clientId) {
+        if (!repository.exists(clientId)) {
+            throw new ClientNotFoundException();
+        }
         Client removedClient = findById(clientId);
         repository.delete(clientId);
         return removedClient;
