@@ -47,7 +47,7 @@ public class ClientController {
         return clients;
     }
 
-    @ApiOperation(value = "Get client with specified id", response = Client.class)
+    @ApiOperation(value = "Get client with specified id")
     @GetMapping(value = "/{clientId}", produces = {"application/json", "application/xml"})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Client projected"),

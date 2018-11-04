@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class ClientControllerTest {
 
-    private static final long ID = 1;
+    private static final long ID = 1L;
     private static final String NAME = "name";
     private static final String LAST_NAME = "lastname";
     private static final String BIRTH_DATE = "12/12/1944";
@@ -60,7 +60,7 @@ public class ClientControllerTest {
             throw new RuntimeException(ex);
         }
         final ClientController clientController = new ClientController(clientService);
-        mockMvc = MockMvcBuilders.standaloneSetup(new ClientController(clientService)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(clientController).build();
     }
 
     @Test
@@ -74,12 +74,9 @@ public class ClientControllerTest {
     @Test
     public void shouldFindClientById() throws Exception {
         clientService.create(client);
-        Client created = clientService.findById(client.getId());
+        Client created = clientService.findById(ID);
         mockMvc.perform(get(PATH + "/" + created.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.id", is(created.getId().intValue())));
-
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -94,7 +91,7 @@ public class ClientControllerTest {
         mockMvc.perform(post(PATH)
                 .contentType(contentType)
                 .content(objectMapper.writeValueAsString(createClient)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(contentType));
     }
 

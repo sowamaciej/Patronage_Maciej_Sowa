@@ -20,28 +20,28 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ApiModelProperty("The database generated client ID")
+    @ApiModelProperty(value = "The database generated client ID", position = 1)
     private Long id;
 
     @NotNull
-    @ApiModelProperty("Name of the client")
+    @ApiModelProperty(value = "Name of the client", example = "Maciej", position = 2)
     private String name;
 
     @NotNull
-    @ApiModelProperty("Surname of the client")
+    @ApiModelProperty(value = "Surname of the client", example = "Sowa", position = 3)
     private String lastName;
 
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @ApiModelProperty("Date of birth: dd/mm/yyyy")
+    @ApiModelProperty(value = "Date of birth: dd/mm/yyyy", example = "12/12/1993", position = 4)
     private Date birthDate;
 
     @NotNull
-    @ApiModelProperty("Client gender")
+    @ApiModelProperty(value = "Client gender", example = "male", position = 5)
     private String sex;
 
     @NotNull
-    @ApiModelProperty("Personal identity number")
+    @ApiModelProperty(value = "Personal identity number", example = "12345678890")
     private String pesel;
 
     public Client() {

@@ -65,13 +65,6 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void shouldFindClientById() {
-        when(clientService.findById(client.getId())).thenReturn(client);
-        Client currentClient = clientService.findById(client.getId());
-        Assert.assertNotNull(currentClient);
-    }
-
-    @Test
     public void shouldUpdateClient() {
         Client updateClient;
         try {

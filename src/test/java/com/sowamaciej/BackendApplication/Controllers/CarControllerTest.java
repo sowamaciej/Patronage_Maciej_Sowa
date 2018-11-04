@@ -43,10 +43,10 @@ public class CarControllerTest {
     private final static String PATH = "/cars";
 
     private Car car;
+    private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
-
-    private MockMvc mockMvc;
     @Autowired
     private CarService carService;
 
@@ -55,7 +55,6 @@ public class CarControllerTest {
         MockitoAnnotations.initMocks(this);
         try {
             car = new Car(REGISTRATION_NUMBER, BRAND, dateParser.parse(PRODUCTION_DATE), dateParser.parse(RELEASE_DATE), CAPACITY, SEATS);
-
         } catch (ParseException ex) {
             throw new RuntimeException(ex);
         }
@@ -74,7 +73,7 @@ public class CarControllerTest {
     @Test
     public void shouldFindCarById() throws Exception {
         carService.create(car);
-        Car created = carService.findById(car.getId());
+        Car created = carService.findById(ID);
         mockMvc.perform(get(PATH + "/" + created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -88,7 +87,7 @@ public class CarControllerTest {
         mockMvc.perform(post(PATH)
                 .contentType(contentType)
                 .content(objectMapper.writeValueAsString(car)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(contentType));
     }
 

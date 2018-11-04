@@ -1,7 +1,9 @@
 package com.sowamaciej.BackendApplication.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sowamaciej.BackendApplication.Validators.DateInRange;
 import com.sowamaciej.BackendApplication.Validators.ReleaseDateInRange;
 import io.swagger.annotations.ApiModel;
@@ -23,39 +25,40 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ApiModelProperty("The database generated car ID")
+    @ApiModelProperty(value = "The database generated car ID", position = 1)
+    @JsonProperty
     private Long id;
 
     @NotNull
     @Pattern(regexp = "^(?!(.).*\1)[A-Z]{2}[0-9]{1,8}$")
-    @ApiModelProperty("Car registration number ")
+    @ApiModelProperty(value = "Car registration number ", position = 2, example = "ZS1234")
     private String registrationNumber;
 
     @NotNull
     @Pattern(regexp = "HONDA|FIAT|SKODA")
-    @ApiModelProperty("Car brand")
+    @ApiModelProperty(value = "Car brand", position = 3, example = "HONDA")
     private String vehicleBrand;
 
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateInRange
-    @ApiModelProperty("Date of first registration: dd/mm/yyyy")
+    @ApiModelProperty(value = "Date of first registration: dd/mm/yyyy", example = "12/12/1990", position = 4)
     private Date dateOfFirstRegistration;
 
     @Min(50)
     @Max(6999)
     @NotNull
-    @ApiModelProperty("Engine capacity")
+    @ApiModelProperty(value = "Engine capacity", position = 5, example = "100")
     private Integer engineCapacity;
 
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @ApiModelProperty("Registration release date: dd/mm/yyyy")
+    @ApiModelProperty(value = "Registration release date: dd/mm/yyyy", example = "12/12/2017", position = 6)
     private Date registrationReleaseDate;
 
     @Min(1)
     @Max(6)
-    @ApiModelProperty("Numbers of seat")
+    @ApiModelProperty(value = "Numbers of seat", position = 7, example = "4")
     private Integer numberOfSeats;
 
     public Car() {
